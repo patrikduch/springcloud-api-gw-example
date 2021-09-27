@@ -8,18 +8,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class SpringCloudGwApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(SpringCloudGwApplication.class, args);
     }
-
-    @Bean
-    public RouteLocator myRoutes(RouteLocatorBuilder builder) {
-        return builder.routes()
-                .route(p -> p
-                        .path("/get")
-                        .uri("http://httpbin.org:80"))
-                .build();
-    }
-
 }
