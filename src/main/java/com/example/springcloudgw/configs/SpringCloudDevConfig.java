@@ -12,7 +12,7 @@ public class SpringCloudDevConfig {
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(r ->
-                        r.path("/microservice1/**")
+                        r.path("/microservice1/")
                                 .filters(
                                         f -> f.stripPrefix(1)
                                 )
