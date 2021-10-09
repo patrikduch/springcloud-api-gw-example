@@ -1,0 +1,35 @@
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          my-keycloak-provider:
+            issuer-uri: http://localhost:8090/auth/realms/My-Realm
+            # Individual properties can also be provided this way
+            #token-uri: http://localhost:8080/auth/realms/amrutrealm/protocol/openid-connect/token
+        #            authorization-uri: http://localhost:8080/auth/realms/amrutrealm/protocol/openid-connect/auth
+        #            userinfo-uri: http://localhost:8080/auth/realms/amrutrealm/protocol/openid-connect/userinfo
+        #            user-name-attribute: preferred_username
+        registration:
+          keycloak-spring-gateway-client:
+            provider: my-keycloak-provider
+            client-id: spring-gateway-application
+            client-secret: b32a0742-83c6-4644-bfef-1a3981e99247
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+
+# Enable these to debug the Authorization flow
+logging:
+  level:
+    org:
+      springframework:
+        security:
+          web: DEBUG
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
