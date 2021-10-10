@@ -1,11 +1,9 @@
 version: '3'
-
 volumes:
   postgres_data:
     driver: local
 
 services:
-
   postgres:
     image: postgres
     volumes:
@@ -17,7 +15,8 @@ services:
     networks:
       - my-network-name
   keycloak:
-      image: quay.io/keycloak/keycloak:latest
+      container_name: "keycloak"
+      image: jboss/keycloak:13.0.1
       restart: on-failure
       environment:
         DB_VENDOR: POSTGRES
@@ -31,11 +30,26 @@ services:
         # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
         #JDBC_PARAMS: "ssl=true"
       ports:
-        - 8090:8080
+        - 8080:8080
       depends_on:
         - postgres
       networks:
         - my-network-name
+
+  springcloudapigw:
+      build: ./
+      container_name: "springcloud-api-gw"
+      ports:
+        - 80:80 # Exposing application port from docker container to the outside
+        - 8000:8000 # Debugging purposes
+
+      depends_on:
+        - keycloak
+
+      networks:
+        - my-network-name
+
+      command: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000 -jar /SpringCloudGW-0.0.1-SNAPSHOT.jar
 
 networks:
   my-network-name:

@@ -8,6 +8,7 @@ import java.security.Principal;
 public class UserController {
     @GetMapping("/getUser")
     public String getActualUser(Principal principal) {
+
         return principal.getName();
     }
 }
