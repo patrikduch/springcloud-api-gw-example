@@ -1,18 +1,24 @@
 # springloud-api-gw-example
 
+
 ## routes
 http://localhost:80/microservice1/
 
 ## dockerization
 
-### docker build
+### keycloak integration
+
+Host must be enabled for accessing KeyCloak domain.
 
 ```bash
-docker build -t springcloud-api-gw .
+127.0.0.1 keycloak
 ```
 
-### docker run
+### gradle task
 
 ```bash
-docker run -p 8080:8080 springcloud-api-gw
+build composeUp
 ```
+
+### debugging
+For debugging SpringBoot app placed inside docker container, it's necessary to use "Remote JVM Debug".

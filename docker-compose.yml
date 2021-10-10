@@ -13,7 +13,7 @@ services:
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
     networks:
-      - my-network-name
+      - api-gw-network
   keycloak:
       container_name: "keycloak"
       image: jboss/keycloak:13.0.1
@@ -34,10 +34,11 @@ services:
       depends_on:
         - postgres
       networks:
-        - my-network-name
+        - api-gw-network
 
   springcloudapigw:
       build: ./
+      restart: on-failure
       container_name: "springcloud-api-gw"
       ports:
         - 80:80 # Exposing application port from docker container to the outside
@@ -47,10 +48,10 @@ services:
         - keycloak
 
       networks:
-        - my-network-name
+        - api-gw-network
 
       command: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000 -jar /SpringCloudGW-0.0.1-SNAPSHOT.jar
 
 networks:
-  my-network-name:
+  api-gw-network:
     driver: bridge
