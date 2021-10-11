@@ -37,7 +37,9 @@ services:
         - api-gw-network
 
   springcloudapigw:
-      build: ./
+      build:
+        context: .
+        dockerfile: ./docker/Dockerfile.development
       restart: on-failure
       container_name: "springcloud-api-gw"
       ports:
