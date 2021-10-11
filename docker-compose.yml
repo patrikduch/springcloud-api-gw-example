@@ -44,6 +44,9 @@ services:
         - 80:80 # Exposing application port from docker container to the outside
         - 8000:8000 # Debugging purposes
 
+      environment:
+        - "SPRING_PROFILES_ACTIVE=development"
+
       depends_on:
         - keycloak
 
